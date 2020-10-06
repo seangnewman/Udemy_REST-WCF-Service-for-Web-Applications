@@ -64,3 +64,53 @@ function deleteHero(heroId) {
         }
     });
 }
+
+
+function searchHero() {
+        var searchTerm  = $("#searchText").val()
+      
+    $.ajax({
+        url: "Service/SuperHeroService.svc/SearchHero/" + searchTerm,
+        type: "GET",
+        dataType: "json",
+        
+        success: function (result) {
+            heroes = result;
+            drawHeroTable(result);
+        },
+        error: function (error) {
+            console.error(error.responseText);
+            $("#heroOverview").html(error.responseText);
+        }
+    });
+}
+
+function sortedHeroList(type) {
+
+    $.ajax({
+        url: "Service/SuperHeroService.svc/GetSortedHeroList/" + type,
+        type: "GET",
+        dataType: "json",
+
+        success: function (result) {
+                    drawHeroTable(result);
+        }
+    });
+}
+
+
+function fight() {
+    var id1 = $("#fighter1").val();
+    var id2 = $("#fighter2").val();
+
+
+    $.ajax({
+        url: "Service/SuperHeroService.svc/Fight/" + id1 + "/" + id2,
+        type: "GET",
+        dataType: "json",
+
+        success: function (result) {
+            $("#fightResult").html(result);
+        }
+    });
+}
